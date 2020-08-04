@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterfinalproject/components/homepageAppbar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutterfinalproject/components/home_page.dart';
-import 'package:flutterfinalproject/Views/productPage.dart';
+import 'file:///D:/avd/flutter_final_project/lib/Views/HubPage.dart';
+import 'file:///D:/avd/flutter_final_project/lib/junk/productPage.dart';
+
+import 'Views/ProductScreen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -25,13 +28,16 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('fa'), // farsi
       ],
-      theme:
-          ThemeData(primaryColor: Colors.white, backgroundColor: Colors.white),
+      theme: ThemeData(
+          primaryColor: Colors.white,
+          backgroundColor: Colors.white,
+//          canvasColor: Colors.grey.shade300
+      ),
       home: AnnotatedRegion<SystemUiOverlayStyle>(
-        child: ProductPage(),
+        child: HubPage(0),
         value: SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: Colors.transparent,
-            systemNavigationBarColor: Colors.transparent,
+            statusBarColor: Colors.white,
+            systemNavigationBarColor: Colors.white,
             systemNavigationBarIconBrightness: Brightness.dark),
       ),
     );

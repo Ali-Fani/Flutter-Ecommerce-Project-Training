@@ -18,15 +18,21 @@
   - [x] Product Pictures Slider
   - [x] Product Name and Manufacture Name
   - [x] Product Rating
-  - [ ] Gauranty Data
-  - [ ] Product Description and Review
-  - [ ] Product User Review
+  - [x] Product Description and Review
+  - [x] Product User Review
+  - [ ] Product User Review Extention
 - [ ] User Comments
-  - [ ] User Comments ListView
+  - [x] User Comments ListView
+  - [ ] User Comments ListView Extention
   - [ ] User Comment Form
 - [ ] Splash Screen
+  - [x] View
+  - [ ] Actual Splash Screen
 - [ ] User Account View
 - [ ] Shopping Cart View
+  - [ ] Cart Items
+  - [ ] Cart Logic
+  - [ ] Cart Botttn Navigation Bar
 - [ ] Product Filter
   - [ ] Category Filter
-- [ ] Back-End Api Setup
+- [x] Back-End Api Setup

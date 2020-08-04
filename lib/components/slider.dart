@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutterfinalproject/Models/banner.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+import 'package:flutterfinalproject/components/utils.dart';
 class picSlider extends StatefulWidget {
   picSlider({Key key}) : super(key: key);
 
@@ -8,36 +12,73 @@ class picSlider extends StatefulWidget {
 }
 
 class _picSliderState extends State<picSlider> {
+  List<AppBanner> sliders=[];
+  void getSliders(List<AppBanner> list){
+
+  if(sliders.length==0){
+
+
+
+    var url=GetData.server_url+"Main-sliders";
+
+    http.get(url).then((response){
+
+
+
+      if (response.statusCode==200) {
+        List jsonResponse = convert.jsonDecode(response.body);
+        for (int i = 0; i < jsonResponse.length; i++) {
+          setState(() {
+            sliders.add(new AppBanner(
+
+              img_url: jsonResponse[i]['images'][0]["url"],
+              url: jsonResponse[i]['link']
+
+            ),
+
+
+            );
+          });
+        }
+      }
+    }
+        );}
+
+  }
   @override
   Widget build(BuildContext context) {
+    getSliders(sliders);
+
+
     return Container(
       width: MediaQuery.of(context).size.width,
       child: CarouselSlider(
 
         options: CarouselOptions(height: 200.0),
-        items: [
-          'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-          'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-          'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-          'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-          'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-          'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-        ].map((i) {
+        items: sliders.map((i) {
+          String image_url=i.img_url;
+          String url=i.url;
+
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(color: Colors.transparent),
-                  child: ClipRRect(
-                    child: Image(
-                      image: NetworkImage("$i"),
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(6)),
-                  ));
+              return GestureDetector(
+                onTap: (){
+                  print(url);
+                },
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    child: ClipRRect(
+                      child: Image(
+                        image: NetworkImage("http://10.0.2.2:1337"+"$image_url"),
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(6)),
+                    )),
+              );
             },
           );
         }).toList(),
